@@ -13,23 +13,7 @@ function PlayerShot(x,y,vx,vy,width,height) {
 	//this.hitbox = {width: width, height: height};
 	
 
-	this.spriteSheet = new createjs.SpriteSheet({
-		"images": [load.getResult("bullet")],
-		"frames": {
-			"width": 16,
-			"height": 16,
-			"count": 4,
-			"regX": 4,
-			"regY": 4
-		},
-		"animations":{
-			"spin": {
-				"frames": [0,1,2,3],
-				"next": "spin",
-				"speed": .2
-			}
-		}
-	});
+	this.spriteSheet = playerShotSpriteSheet;
 
 	this.sprite = new createjs.Sprite(this.spriteSheet, "spin");
 	this.animations = this.sprite;
@@ -76,8 +60,7 @@ function PurpleDot(x,y,vx,vy,width,height) {
 		"animations":{
 			"spin": {
 				"frames": [0],
-				"next": "spin",
-				"speed": .2
+				"next": "spin"
 			}
 		}
 	});
@@ -105,7 +88,7 @@ function PurpleDot(x,y,vx,vy,width,height) {
 	}
 }
 
-function BlueOrb(x,y,vx,vy,width,height) {
+function Orb(x,y,vx,vy,width,height, color) {
 	this.x = x;
 	this.y = y;
 	this.vx = vx;
@@ -116,117 +99,10 @@ function BlueOrb(x,y,vx,vy,width,height) {
 	//this.hitbox = {width: width, height: height};
 	
 
-	this.spriteSheet = new createjs.SpriteSheet({
-		"images": [load.getResult("white")],
-		"frames": {
-			"width": 16,
-			"height": 16,
-			"count": 4,
-			"regX": 8,
-			"regY": 8
-		},
-		"animations":{
-			"spin": {
-				"frames": [0],
-				"next": "spin",
-				"speed": .2
-			}
-		}
-	});
-	this.spriteSheet2 = new createjs.SpriteSheet({
-		"images": [load.getResult("center")],
-		"frames": {
-			"width": 16,
-			"height": 16,
-			"count": 1,
-			"regX": 8,
-			"regY": 8
-		},
-		"animations":{
-			"spin": {
-				"frames": [0],
-				"next": "spin",
-			}
-		}
-	});
+	this.spriteSheet = colorSpriteSheet;
+	this.spriteSheet2 = whiteSpriteSheet;
 
-	this.sprite = new createjs.Sprite(this.spriteSheet, "spin");
-	this.sprite2 = new createjs.Sprite(this.spriteSheet2, "spin");
-
-	colorContainer.addChild(this.sprite);
-	whiteContainer.addChild(this.sprite2);
-
-	this.sprite.x = this.x;
-	this.sprite.y = this.y;
-	this.sprite2.x = this.x;
-	this.sprite2.y = this.y;
-
-	this.update = function() {
-		this.x += this.vx;
-		this.y += this.vy;
-
-		this.sprite.x = this.x;
-		this.sprite.y = this.y;
-		this.sprite2.x = this.x;
-		this.sprite2.y = this.y;
-
-		this.life--;
-	};
-
-	this.destroy = function() {
-		this.life = 0;
-		colorContainer.removeChild(this.sprite);
-		whiteContainer.removeChild(this.sprite2);
-	};
-}
-
-function PinkOrb(x,y,vx,vy,width,height) {
-	this.x = x;
-	this.y = y;
-	this.vx = vx;
-	this.vy = vy;
-
-	this.life = 200;
-
-	//this.hitbox = {width: width, height: height};
-	
-
-	this.spriteSheet = new createjs.SpriteSheet({
-		"images": [load.getResult("white")],
-		"frames": {
-			"width": 16,
-			"height": 16,
-			"count": 4,
-			"regX": 8,
-			"regY": 8
-		},
-		"animations":{
-			"spin": {
-				"frames": [3],
-				"next": "spin",
-				"speed": .2
-			}
-		}
-	});
-
-	this.spriteSheet2 = new createjs.SpriteSheet({
-		"images": [load.getResult("center")],
-		"frames": {
-			"width": 16,
-			"height": 16,
-			"count": 1,
-			"regX": 8,
-			"regY": 8
-		},
-		"animations":{
-			"spin": {
-				"frames": [0],
-				"next": "spin",
-			}
-		}
-	});
-
-	this.sprite = new createjs.Sprite(this.spriteSheet, "spin");
+	this.sprite = new createjs.Sprite(this.spriteSheet, color);
 	this.sprite2 = new createjs.Sprite(this.spriteSheet2, "spin");
 
 	colorContainer.addChild(this.sprite);

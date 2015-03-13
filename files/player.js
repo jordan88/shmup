@@ -78,8 +78,9 @@ function Player(x,y) {
 	this.animations.y = this.y;
 
 	var moveListener = function(event) {
-		this.x = event.pageX;
-		this.y = event.pageY;
+		var pos = getMousePos(document.getElementById("c"), event);
+		this.x = pos.x;
+		this.y = pos.y;
 		this.animations.x = this.x;
 		this.animations.y = this.y;
 
@@ -158,3 +159,11 @@ function Player(x,y) {
 Player.prototype.collisionCallback = function() {
 	//console.log("Boss hit");
 }
+
+ function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
+  }

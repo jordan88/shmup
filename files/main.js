@@ -16,9 +16,16 @@ var renderer = null;
 var colorContainer = null;
 var whiteContainer = null;
 
-// assets to be initialized
+// game vars
 var player = null;
 var boss = null;
+
+// bullet sprite sheets
+
+var whiteSpriteSheet = null;
+var colorSpriteSheet = null;
+var playerShotSpriteSheet = null;
+
 
 window.onload = function() {
 	initBasicVars();
@@ -68,9 +75,74 @@ function initBasicVars() {
 }
 
 function initAssets() {
+
+	whiteSpriteSheet = new createjs.SpriteSheet({
+		"images": [load.getResult("center")],
+		"frames": {
+			"width": 16,
+			"height": 16,
+			"count": 1,
+			"regX": 8,
+			"regY": 8
+		},
+		"animations":{
+			"spin": {
+				"frames": [0],
+				"next": "spin",
+			}
+		}
+	});
+
+	colorSpriteSheet =  new createjs.SpriteSheet({
+		"images": [load.getResult("white")],
+		"frames": {
+			"width": 16,
+			"height": 16,
+			"count": 4,
+			"regX": 8,
+			"regY": 8
+		},
+		"animations":{
+			"blue": {
+				"frames": [0],
+				"next": "blue"
+			},
+			"green": {
+				"frames": [1],
+				"next": "green"
+			},
+			"purple": {
+				"frames": [2],
+				"next": "purple"
+			},
+			"red": {
+				"frames": [3],
+				"next": "red"
+			}
+		}
+	});
+
+	playerShotSpriteSheet = new createjs.SpriteSheet({
+		"images": [load.getResult("bullet")],
+		"frames": {
+			"width": 16,
+			"height": 16,
+			"count": 4,
+			"regX": 4,
+			"regY": 4
+		},
+		"animations":{
+			"spin": {
+				"frames": [0,1,2,3],
+				"next": "spin",
+				"speed": .2
+			}
+		}
+	});
+
+
 	player = new Player(canvasWidth/2, 2*canvasHeight/3);
 	boss = new DDP3(canvasWidth/2, canvasHeight/3);
-	
 	shipContainer.addChild(boss.animations);
 	shipContainer.addChild(player.animations);
 
@@ -83,4 +155,5 @@ function handleTick(event) {
 	player.update();
 	boss.update();
 	gameStage.update();
+	console.log(createjs.Ticker.getMeasuredFPS())
 }

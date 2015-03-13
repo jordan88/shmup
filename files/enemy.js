@@ -93,8 +93,8 @@ function DDP3(x, y) {
 	this.hp = 10000;
 
 	this.bulletSpawns = [
-		new BulletSpawn(-50,10,shootAtEm,this), 
-		new BulletSpawn(50, 10, shootAtEm, this),
+	//	new BulletSpawn(-50,10,shootAtEm,this), 
+		//new BulletSpawn(50, 10, shootAtEm, this),
 		new BulletSpawn(0,0, circle, this),
 	];
 

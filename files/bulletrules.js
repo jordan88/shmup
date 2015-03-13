@@ -46,7 +46,7 @@ function circle() {
 			var pvx = speed*Math.cos(dAngle + i*2*Math.PI/number);
 			var pvy = speed*Math.sin(dAngle + i*2*Math.PI/number);
 			var randomness = 10;
-			this.bulletList.append(new PinkOrb(random()*randomness + x, random()*randomness + y, vx, vy, 1, 1));
+			this.bulletList.append(new Orb(random()*randomness + x, random()*randomness + y, vx, vy, 1, 1, "blue"));
 			this.bulletList.append(new PurpleDot(random()*randomness + x, random()*randomness+ y, pvx, pvy, 1, 1))
 		}
 	}
@@ -63,28 +63,28 @@ function cherryBlossom() {
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(i*2*Math.PI/numBullets);
-			this.bulletList.append(new PinkOrb(x, y, vx, vy, 1, 1));
+			this.bulletList.append(new Orb(x, y, vx, vy, 1, 1, "red"));
 		}
 	}
 	else if(this.counter % 100 === 25) {
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(epsilon + i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(epsilon + i*2*Math.PI/numBullets);
-			this.bulletList.append(new PinkOrb(x, y, vx, vy, 1, 1));
+			this.bulletList.append(new Orb(x, y, vx, vy, 1, 1, "purple"));
 		}
 	}
 	else if(this.counter % 100 === 50) {
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(2*epsilon + i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(2*epsilon + i*2*Math.PI/numBullets);
-			this.bulletList.append(new PinkOrb(x, y, vx, vy, 1, 1));
+			this.bulletList.append(new Orb(x, y, vx, vy, 1, 1, "red"));
 		}
 	}
 	else if(this.counter % 100 === 75) {
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(3*epsilon + i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(3*epsilon + i*2*Math.PI/numBullets);
-			this.bulletList.append(new PinkOrb(x, y, vx, vy, 1, 1));
+			this.bulletList.append(new Orb(x, y, vx, vy, 1, 1, "purple"));
 		}
 	}
 }
@@ -97,7 +97,7 @@ function spread() {
 			var vx = 3*Math.cos(i*2*Math.PI/100);
 			var vy = 3*Math.sin(i*2*Math.PI/100);
 
-			this.bulletList.append(new PurpleDot(x, y, vx, vy, 1, 1));
+			this.bulletList.append(new Orb(x, y, vx, vy, 1, 1, "green"));
 		}
 	}
 }
@@ -112,7 +112,7 @@ function shootAtEm() {
 		vx = 10*vx/mag;
 		vy = 10*vy/mag;
 
-		this.bulletList.append(new BlueOrb(x, y, vx, vy, 1,1));
+		this.bulletList.append(new Orb(x, y, vx, vy, 1,1, "green"));
 	}
 }
 
@@ -128,7 +128,7 @@ function hose() {
 		vx = speed*vx/mag;
 		vy = speed*vy/mag;
 
-		this.bulletList.append(new PinkOrb(x, y, vx, vy, 1,1));
+		this.bulletList.append(new Orb(x, y, vx, vy, 1,1, "red"));
 	}
 }
 
@@ -156,6 +156,8 @@ function updateBullets(list, targetList, collisionCallback) {
 	if(node) {
 		while(true) {
 			var bullet = node.data;
+
+
 
 			// remove dead bullet
 			if(isDead(bullet) || outOfBounds(bullet, 0-8,0-8, canvasWidth+8, canvasHeight+8)) {
