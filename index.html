@@ -1,0 +1,34 @@
+<!doctype html>
+
+<html>
+<meta charset="utf-8">
+
+<head>
+	<title> Game </title>
+	<!-- libs -->
+	<script src="lib/preloadjs.min.js"></script>
+	<script src="lib/easeljs.min.js"></script>
+	<!-- filez -->
+	<script src="files/list.js"></script>
+	<script src="files/queue.js"></script>
+	<script src="files/test.js"></script>
+	<script src="files/renderer.js"></script>
+	<script src="files/bullet.js"></script>
+	<script src="files/bulletrules.js"></script>
+	<script src="files/bulletspawn.js"></script>
+	<script src="files/player.js"></script>
+	<script src="files/enemy.js"></script>
+	<script src="files/main.js"></script>
+</head>
+<body style="background-image: url(graphics/background.jpg)">
+	<div id="container" style="width: 100%; cursor:none;">
+		<canvas id="c" width="400" height="600" style="border-style:solid;">canvas not supported</canvas>
+	</div>
+	<script>
+		var rect = document.getElementById("c").getBoundingClientRect();
+		rect.left = window.innerwidth/2 - 200;
+		rect.right = window.innerwidth/2 + 200;
+		
+	</script>
+</body>
+</html>
