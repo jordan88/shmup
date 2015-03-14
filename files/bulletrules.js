@@ -173,34 +173,37 @@ function shotgun() {
 	}
 }
 
-function spinner() {
-	var counter = this.counter;
-	if(this.counter % 13 === 0) {
-		var x = this.owner.x + this.x;
-		var y = this.owner.y + this.y;
-		var n = 0;
+function spinnerFactory(cycle) {
+	return function() {
+		var counter = this.counter;
+		if(this.counter % cycle === 0) {
+			var x = this.owner.x + this.x;
+			var y = this.owner.y + this.y;
+			var n = 0;
 
-		var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
-		var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
-		this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
-		n++;
-		var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
-		var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
-		this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
-		n++;
-		var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
-		var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
-		this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
-		n++;
-		var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
-		var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
-		this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
-		n++;
-		var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
-		var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
-		this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
-		n++;
-	}
+			var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
+			var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
+			this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+			n++;
+			var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
+			var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
+			this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+			n++;
+			var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
+			var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
+			this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+			n++;
+			var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
+			var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
+			this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+			n++;
+			var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
+			var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
+			this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+			n++;
+		}
+	};
+
 }
 
 function updateBullets(list, targetList, collisionCallback) {
