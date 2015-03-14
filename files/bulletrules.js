@@ -118,7 +118,7 @@ function shootAtEm() {
 
 function hose() {
 
-	if(this.counter % 10 === 0) {
+	if(this.counter % 16 === 0) {
 		var speed = 2;
 		var x = this.owner.x + this.x;
 		var y = this.owner.y + this.y;
@@ -129,6 +129,29 @@ function hose() {
 		vy = speed*vy/mag;
 
 		this.bulletList.append(new Orb(x, y, vx, vy, 1,1, "red"));
+	}
+	else if(this.counter % 16 === 8) {
+		var speed = 2;
+		var x = this.owner.x + this.x;
+		var y = this.owner.y + this.y;
+		var vx = player.x - x;
+		var vy = player.y - y;
+		var mag = Math.sqrt(vx*vx + vy*vy);
+		vx = speed*vx/mag;
+		vy = speed*vy/mag;
+
+		this.bulletList.append(new PurpleDot(x, y, vx, vy, 1,1));
+	}
+}
+
+function chain() {
+	var count = this.counter % 30;
+	 if(count === 0 || count ===  1 || count === 2) {
+	 	var x = this.owner.x + this.x;
+		var y = this.owner.y + this.y;
+		var vx = player.x - x;
+		var vy = player.y - y;
+	 	this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "green"));
 	}
 }
 
@@ -150,6 +173,36 @@ function shotgun() {
 	}
 }
 
+function spinner() {
+	var counter = this.counter;
+	if(this.counter % 13 === 0) {
+		var x = this.owner.x + this.x;
+		var y = this.owner.y + this.y;
+		var n = 0;
+
+		var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
+		var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
+		this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+		n++;
+		var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
+		var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
+		this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+		n++;
+		var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
+		var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
+		this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+		n++;
+		var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
+		var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
+		this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+		n++;
+		var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
+		var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
+		this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+		n++;
+	}
+}
+
 function updateBullets(list, targetList, collisionCallback) {
 	var node = list.start();
 
@@ -160,7 +213,7 @@ function updateBullets(list, targetList, collisionCallback) {
 
 
 			// remove dead bullet
-			if(isDead(bullet) || outOfBounds(bullet, 0-8,0-8, canvasWidth+8, canvasHeight+8)) {
+			if(isDead(bullet)) {
 				bullet.destroy();
 				list.remove(node);
 			}
@@ -179,7 +232,8 @@ function updateBullets(list, targetList, collisionCallback) {
 						bullet.x > highX ||
 						bullet.y < lowY ||
 						bullet.y > highY)) {
-						bullet.life = 0;
+						bullet.destroy();
+						list.remove(node);
 						collisionCallback();
 					}
 				}

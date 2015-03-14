@@ -17,12 +17,15 @@ function PlayerShot(x,y,vx,vy,width,height) {
 
 	this.sprite = new createjs.Sprite(this.spriteSheet, "spin");
 	this.animations = this.sprite;
-	gameStage.addChild(this.animations);
 
 	this.animations.x = this.x;
 	this.animations.y = this.y;
 
 	this.update = function() {
+
+
+		colorContainer.addChild(this.animations);
+
 		this.x += this.vx;
 		this.y += this.vy;
 
@@ -67,12 +70,15 @@ function PurpleDot(x,y,vx,vy,width,height) {
 
 	this.sprite = new createjs.Sprite(this.spriteSheet, "spin");
 	this.animations = this.sprite;
-	gameStage.addChild(this.animations);
 
 	this.animations.x = this.x;
 	this.animations.y = this.y;
 
 	this.update = function() {
+
+
+		colorContainer.addChild(this.animations);
+
 		this.x += this.vx;
 		this.y += this.vy;
 
@@ -84,17 +90,18 @@ function PurpleDot(x,y,vx,vy,width,height) {
 
 	this.destroy = function() {
 		this.life = 0;
-		gameStage.removeChild(this.animations);
 	}
 }
 
-function Orb(x,y,vx,vy,width,height, color) {
+function Orb(x,y,vx,vy,width,height, color, life) {
 	this.x = x;
 	this.y = y;
 	this.vx = vx;
 	this.vy = vy;
 
-	this.life = 200;
+	this.visible = true;
+
+	this.life = life || 220;
 
 	//this.hitbox = {width: width, height: height};
 	
@@ -105,8 +112,6 @@ function Orb(x,y,vx,vy,width,height, color) {
 	this.sprite = new createjs.Sprite(this.spriteSheet, color);
 	this.sprite2 = new createjs.Sprite(this.spriteSheet2, "spin");
 
-	colorContainer.addChild(this.sprite);
-	whiteContainer.addChild(this.sprite2);
 
 	this.sprite.x = this.x;
 	this.sprite.y = this.y;
@@ -114,6 +119,11 @@ function Orb(x,y,vx,vy,width,height, color) {
 	this.sprite2.y = this.y;
 
 	this.update = function() {
+
+
+		colorContainer.addChild(this.sprite);
+		whiteContainer.addChild(this.sprite2);
+
 		this.x += this.vx;
 		this.y += this.vy;
 
@@ -127,7 +137,5 @@ function Orb(x,y,vx,vy,width,height, color) {
 
 	this.destroy = function() {
 		this.life = 0;
-		colorContainer.removeChild(this.sprite);
-		whiteContainer.removeChild(this.sprite2);
 	};
 }

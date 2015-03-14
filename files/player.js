@@ -5,7 +5,10 @@ function Player(x,y) {
 	this.x = x;
 	this.y = y;
 
-	this.hitbox = {width:4, height:10};
+	this.horiSpeed = 2;
+	this.vertSpeed = 2;
+
+	this.hitbox = {width:10, height:10};
 	this.alive = true;
 
 	this.invincible = false;
@@ -119,6 +122,15 @@ function Player(x,y) {
 
 
 	this.update = function() {
+
+		if(keymap[37]) this.x -= this.horiSpeed;
+		if(keymap[38]) this.y -= this.vertSpeed;
+		if(keymap[39]) this.x += this.horiSpeed;
+		if(keymap[40]) this.y += this.vertSpeed;
+
+		this.animations.x = this.x;
+		this.animations.y = this.y;
+
 		removeDeadBullets(this.bulletList);
 		
 		updateBullets(this.bulletList, [boss], this.collisionCallback);

@@ -27,6 +27,20 @@ var colorSpriteSheet = null;
 var playerShotSpriteSheet = null;
 
 
+var keymap = [];
+
+function keyListener(event) {
+	if(event.keyCode) {
+		keymap[event.keyCode] = event.type == "keydown";
+	}
+	else if(event.charCode) {
+		keymap[event.charCode] = event.type == "keydown";
+	}
+}
+
+document.addEventListener("keydown", keyListener);
+document.addEventListener("keyup", keyListener);
+
 window.onload = function() {
 	initBasicVars();
 
@@ -108,11 +122,11 @@ function initAssets() {
 				"next": "blue"
 			},
 			"green": {
-				"frames": [1],
+				"frames": [2],
 				"next": "green"
 			},
 			"purple": {
-				"frames": [2],
+				"frames": [1],
 				"next": "purple"
 			},
 			"red": {
@@ -155,5 +169,6 @@ function handleTick(event) {
 	player.update();
 	boss.update();
 	gameStage.update();
-	console.log(createjs.Ticker.getMeasuredFPS())
+	whiteContainer.children = [];
+	colorContainer.children = [];
 }
