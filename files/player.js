@@ -11,39 +11,12 @@ function Player(x,y) {
 	this.hitbox = {width:10, height:10};
 	this.alive = true;
 
-	this.invincible = false;
+	this.invincible = 50;
 
 	this.bulletList = new List();
 
-	this.image = load.getResult("player");
 
-	var img = new Image();
-	img.src = this.image.src;
-
-	this.spriteSheet = new createjs.SpriteSheet({
-		"images": [this.image],
-		"frames": {
-			"width": img.width,
-			"height": img.height,
-			"regX": img.width/2,
-			"regY": img.height/2,
-			"count": 1
-		},
-		"animations":{
-			"still": {
-				"frames": [0],
-				"next": "still",
-			},
-			"movingRight": {
-				"frames": [0],
-				"next": "movingRight"
-			},
-			"movingLeft": {
-				"frames": [0],
-				"next": "movingLeft"
-			}
-		}
-	});
+	this.spriteSheet = playerSpriteSheet;
 
 	this.spriteSheetPixel = new createjs.SpriteSheet({
 		"images": [load.getResult("pixel")],
@@ -104,24 +77,10 @@ function Player(x,y) {
 
 	fire();
 
-	var hitCallback = function() {
-		/*
-		this.die;
-		setTimeout(function() {
-			
-			gameStage.removeChild(this.explodeSprite);
-			player = new Player(this.x, this.y);
-			player.invincible = true;
-
-			setTimeout(function() {
-				player.invincible = false;
-			}, 1000);
-		},100);
-*/
-	}.bind(this);
-
 
 	this.update = function() {
+
+		if(this.invincible) this.invincible--;
 
 		if(keymap[37]) this.x -= this.horiSpeed;
 		if(keymap[38]) this.y -= this.vertSpeed;
@@ -142,8 +101,9 @@ function Player(x,y) {
 	};
 
 	this.die = function() {
-/*
-		var image = load.getResult("player");
+		console.log("player dead");
+
+		var image = load.getResult("explosion");
 
 		var img = new Image();
 		img.src = image.src;
@@ -153,8 +113,8 @@ function Player(x,y) {
 			"frames": {
 				"width": img.width/5,
 				"height": img.height/3,
-				"regX": img.width/2,
-				"regY": img.height/2,
+				"regX": img.width/10,
+				"regY": img.height/6,
 				"count": 15
 			},
 			"animations":{
@@ -165,17 +125,24 @@ function Player(x,y) {
 			}
 		});
 
-		this.explodeSprite = new createjs.Sprite(explodeSpriteSheet, "explode");
+		var explodeSprite = new createjs.Sprite(explodeSpriteSheet, "explode");
 		explodeSprite.x = player.x;
 		explodeSprite.y = player.y;
-		gameStage.addChild(explodeSprite);
-		*/
+		shipContainer.addChild(explodeSprite);
+		function removeExplosion() {
+			shipContainer.removeChild(explodeSprite)
+		}
+		setTimeout(removeExplosion, 1000);
 	}
 }
 
 Player.prototype.collisionCallback = function(target) {
 	gameState.score += 10;
 	target.hp--;
+
+	if(enemyList.length == 0 || (boss && boss.hp <= 0)) {
+
+	}
 }
 
  function getMousePos(canvas, evt) {

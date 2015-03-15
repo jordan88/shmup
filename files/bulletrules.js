@@ -225,20 +225,22 @@ function updateBullets(list, targetList, collisionCallback) {
 				bullet.update();
 				for(var i = 0; i < targetList.length; i++) {
 					var target = targetList[i];
+					if(target) {
+						var lowX = target.x - target.hitbox.width/2;
+						var highX = target.x + target.hitbox.width/2;
+						var lowY = target.y - target.hitbox.height/2;
+						var highY = target.y + target.hitbox.height/2;
 
-					var lowX = target.x - target.hitbox.width/2;
-					var highX = target.x + target.hitbox.width/2;
-					var lowY = target.y - target.hitbox.height/2;
-					var highY = target.y + target.hitbox.height/2;
-
-					if(!(bullet.x < lowX ||
-						bullet.x > highX ||
-						bullet.y < lowY ||
-						bullet.y > highY)) {
-						bullet.destroy();
-						list.remove(node);
-						collisionCallback(target);
+						if(!(bullet.x < lowX ||
+							bullet.x > highX ||
+							bullet.y < lowY ||
+							bullet.y > highY)) {
+							bullet.destroy();
+							list.remove(node);
+							collisionCallback(target);
+						}
 					}
+					
 				}
 				
 			}

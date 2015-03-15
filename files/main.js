@@ -23,13 +23,14 @@ var player = null;
 var boss = null;
 var enemyList = null;
 var gameState = {
-	lives: 3,
-	stage: 1,
-	score: 0
-}
+		lives: 2,
+		stage: 1,
+		score: 0
+	};
 
 var score = null;
 var bossHp = null;
+var shipLivesContainer = null;
 // bullet sprite sheets
 
 var whiteSpriteSheet = null;
@@ -101,6 +102,7 @@ function initBasicVars() {
 	enemyList = new List();
 	score = new createjs.Text(0, "20px Arial", "#ff0000");
 	bossHp = new createjs.Shape();
+	shipLivesContainer = new createjs.Container();
 }
 
 function initAssets() {
@@ -168,13 +170,35 @@ function initAssets() {
 			}
 		}
 	});
-}
 
-function handleTick(event) {
-	player.update();
-	boss.update();
-	overlayUpdate();
-	gameStage.update();
-	whiteContainer.children = [];
-	colorContainer.children = [];
+
+	var loadimage = load.getResult("player");
+
+	var img = new Image();
+	img.src = loadimage.src;
+
+	playerSpriteSheet = new createjs.SpriteSheet({
+		"images": [loadimage],
+		"frames": {
+			"width": img.width,
+			"height": img.height,
+			"regX": img.width/2,
+			"regY": img.height/2,
+			"count": 1
+		},
+		"animations":{
+			"still": {
+				"frames": [0],
+				"next": "still",
+			},
+			"movingRight": {
+				"frames": [0],
+				"next": "movingRight"
+			},
+			"movingLeft": {
+				"frames": [0],
+				"next": "movingLeft"
+			}
+		}
+	});
 }

@@ -174,7 +174,17 @@ function DDP3(x, y) {
 }
 
 DDP3.prototype.collisionCallback = function() {
-//	console.log("Player hit");
+	console.log("Player hit");
+	if(!player.invincible) {
+		player.die();
+		gameState.lives--;
+		if(gameState.lives < 0) {
+			resetGame();
+		}
+		else {
+			clearGame();
+		}
+	}
 }
 
 function DDP4(x, y) {
@@ -250,10 +260,13 @@ function DDP4(x, y) {
 		move();
 		this.animations.x = this.x;
 		this.animations.y = this.y;
-		for(var i = 0; i < this.bulletSpawns.length; i++) {
-			this.bulletSpawns[i].update([player], this.collisionCallback);
-		}
+		if(player) {
+			for(var i = 0; i < this.bulletSpawns.length; i++) {
+				this.bulletSpawns[i].update([player], this.collisionCallback);
+			}
 
+		}
+		
 	}
 }
 
@@ -343,5 +356,6 @@ function DDP5(x, y) {
 }
 
 DDP5.prototype.collisionCallback = function() {
-//	console.log("Player hit");
+	console.log("Player hit");
+	
 }

@@ -13,8 +13,11 @@ function BulletSpawn(x, y, pattern, owner) {
 
 	this.update = function(targetList, callback) {
 		removeDeadBullets(this.bulletList);
-		updateBullets(this.bulletList, targetList, callback);
-		this.pattern();
-		this.counter++;
+		updateBullets(this.bulletList, [player], callback);
+		if(player) {
+
+			this.pattern();
+			this.counter++;
+		}
 	};
 }

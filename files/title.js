@@ -4,20 +4,18 @@
  */
 
 function loadTitle() {
-	clearGame();
 
 	var titleScreen = load.getResult("title");
 
 
 	var title = new createjs.Bitmap(titleScreen);
-	console.log(title);
 	title.x = 0;
 	title.y = 0;
 	title.scaleX = canvasWidth/titleScreen.width;
 	title.scaleY = canvasHeight/titleScreen.height;
 
 	 var text = new createjs.Text("Press Start", "20px Arial", "#ff7700");
-	 text.x = 100;
+	 text.x = canvasWidth/2 - 50;
 	 text.y = 100;
 	 text.textBaseline = "alphabetic";
 
@@ -28,31 +26,53 @@ function loadTitle() {
 	gameStage.update();
 
 	var titleClickListener = function(e) {
+		console.log("hey");
+		this.removeEventListener("click", titleClickListener);
 		gameStage.removeAllChildren();
 		loadGame();
-		this.removeEventListener("click", titleClickListener);
 	}
 
 	document.getElementById("c").addEventListener("click", titleClickListener);
-	document.addEventListener("keypress", titleClickListener);
 }
 
 function loadGame() {
-	clearGame();
+
+	gameState = {
+		lives: 2,
+		stage: 1,
+		score: 0
+	};
 
 	gameStage.addChild(shipContainer, colorContainer, whiteContainer, overlayContainer);
-
-	player = new Player(canvasWidth/2, 2*canvasHeight/3);
-	shipContainer.addChild(player.animations);
 
 	boss = new DDP3(canvasWidth/2, canvasHeight/3);
 	shipContainer.addChild(boss.animations);
 
-	score = new createjs.Text(gameState.score, "20px Arial", "#ff0000");
+	player = new Player(canvasWidth/2, 2*canvasHeight/3);
+	shipContainer.addChild(player.animations);
+
+
+	score.text = gameState.score;
 	score.x = canvasWidth - 100;
 	score.y = 0;
 
 	overlayContainer.addChild(score);
+
+	
+	shipLivesContainer.x = 25;
+	shipLivesContainer.y = canvasHeight - 25;
+
+	for(var i = 0; i < gameState.lives; i++) {
+		var sprite = new createjs.Sprite(playerSpriteSheet, "still");
+		sprite.scaleX = .5;
+		sprite.scaleY = .5;
+
+		sprite.x = i*25;
+		sprite.y = 0;
+
+		shipLivesContainer.addChild(sprite);
+	}
+	overlayContainer.addChild(shipLivesContainer);
 
 	if(boss) {
 
@@ -61,31 +81,82 @@ function loadGame() {
 	}
 
 
+
+
 	createjs.Ticker.addEventListener("tick", handleTick);
 	createjs.Ticker.useRAF = true;
 	createjs.Ticker.setFPS(60);
 }
 
+
+function handleTick(event) {
+	if(player) player.update();
+	boss.update();
+	overlayUpdate();
+	gameStage.update();
+	whiteContainer.children = [];
+	colorContainer.children = [];
+}
+
 /**
- * game is still running, but clears screen and enemies
+ * game is still running, but clears screen and enemies to go to next level
  */
 function clearGame() {
-	gameStage.removeAllChildren();
-	gameStage.removeAllEventListeners();
-	whiteContainer.removeAllChildren();
-	colorContainer.removeAllChildren();
-	shipContainer.removeAllChildren();
-	overlayContainer.removeAllChildren();
 
-	enemyList.clear();
+	shipLivesContainer.removeAllChildren();
+	for(var i = 0; i < gameState.lives; i++) {
+		var sprite = new createjs.Sprite(playerSpriteSheet, "still");
+		sprite.scaleX = .5;
+		sprite.scaleY = .5;
+
+		sprite.x = i*25;
+		sprite.y = 0;
+
+		shipLivesContainer.addChild(sprite);
+	}
+
+
+	var x = player.x;
+	var y = player.y;
+
+
+	shipContainer.removeChild(player.animations);
 
 	player = null;
+
+	function showPlayerAgain() {
+		player = new Player(x,y);
+		shipContainer.addChild(player.animations);
+	}
+
+	setTimeout(showPlayerAgain, 2000)
 }
 /**
  * game is over, reset everything
  */
 function resetGame() {
 
+
+	shipContainer.removeChild(player.animations);
+
+	player = null;
+
+
+	setTimeout(function() {
+		createjs.Ticker.removeEventListener("tick", handleTick);
+
+		enemyList.clear();
+		boss = null;
+		gameStage.removeAllChildren();
+		gameStage.removeAllEventListeners();
+		whiteContainer.removeAllChildren();
+		colorContainer.removeAllChildren();
+		shipContainer.removeAllChildren();
+		overlayContainer.removeAllChildren();
+
+		loadTitle();
+	}, 2000);
+	
 }
 
 /**
