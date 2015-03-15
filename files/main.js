@@ -1,5 +1,4 @@
 /*
-	maybe we should place bullets in a global enemyBulletContainer
  */
 // constants
 var canvasWidth = 400;
@@ -21,6 +20,7 @@ var overlayContainer = null;
 // game vars
 var player = null;
 var boss = null;
+var bossList = [];
 var enemyList = null;
 var gameState = {
 		lives: 2,

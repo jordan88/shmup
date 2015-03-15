@@ -4,7 +4,8 @@
 function Massive(x, y) {
 	this.x = x;
 	this.y = y;
-	this.hp = 1000000;
+	this.hp = 100;
+	this.maxhp = this.hp;
 	this.bulletSpawns = [
 	new BulletSpawn(0,-100, shotgun, this),
 	new BulletSpawn(0,0,shotgun, this),
@@ -83,13 +84,14 @@ function Massive(x, y) {
 }
 
 Massive.prototype.collisionCallback = function() {
-//	console.log("Player hit");
+	console.log("Player hit");
+	checkIfPlayerDeadAndTakeAction();
 }
 
 function DDP3(x, y) {
 	this.x = x;
 	this.y = y;
-	this.hp = 1000;
+	this.hp = 100;
 	this.maxhp = this.hp;
 	this._node;
 
@@ -175,23 +177,14 @@ function DDP3(x, y) {
 
 DDP3.prototype.collisionCallback = function() {
 	console.log("Player hit");
-	if(!player.invincible) {
-		player.die();
-		gameState.lives--;
-		if(gameState.lives < 0) {
-			resetGame();
-		}
-		else {
-			clearGame();
-		}
-	}
+	checkIfPlayerDeadAndTakeAction();
 }
 
 function DDP4(x, y) {
 	this.x = x;
 	this.y = y;
-	this.hp = 10000;
-
+	this.hp = 100;
+	this.maxhp = this.hp;
 	this.bulletSpawns = [
 	new BulletSpawn(0,-100, shotgun, this),
 	new BulletSpawn(0,0,shotgun, this),
@@ -271,15 +264,16 @@ function DDP4(x, y) {
 }
 
 DDP4.prototype.collisionCallback = function() {
-//	console.log("Player hit");
-}
+	console.log("Player hit");
+	checkIfPlayerDeadAndTakeAction();
+}	
 
 
 function DDP5(x, y) {
 	this.x = x;
 	this.y = y;
-	this.hp = 100000;
-
+	this.hp = 100;
+	this.maxhp = this.hp;
 	this.bulletSpawns = [
 	new BulletSpawn(0,-100, shotgun, this),
 	new BulletSpawn(0,0,shotgun, this),
@@ -357,5 +351,5 @@ function DDP5(x, y) {
 
 DDP5.prototype.collisionCallback = function() {
 	console.log("Player hit");
-	
+	checkIfPlayerDeadAndTakeAction();
 }

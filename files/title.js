@@ -1,6 +1,5 @@
 /**
- * code for title menu
- * click handler
+ * well this degenerated quickly into a mess. 
  */
 
 function loadTitle() {
@@ -26,7 +25,6 @@ function loadTitle() {
 	gameStage.update();
 
 	var titleClickListener = function(e) {
-		console.log("hey");
 		this.removeEventListener("click", titleClickListener);
 		gameStage.removeAllChildren();
 		loadGame();
@@ -34,6 +32,7 @@ function loadTitle() {
 
 	document.getElementById("c").addEventListener("click", titleClickListener);
 }
+
 
 function loadGame() {
 
@@ -43,49 +42,15 @@ function loadGame() {
 		score: 0
 	};
 
-	gameStage.addChild(shipContainer, colorContainer, whiteContainer, overlayContainer);
+	bossList = [
+		new DDP3(canvasWidth/2, canvasHeight/3),
+		new Massive(canvasWidth/2, canvasHeight/3),
+		new DDP5(canvasWidth/2, canvasHeight/3),
+		new DDP4(canvasWidth/2, canvasHeight/3)
+	];
 
-	boss = new DDP3(canvasWidth/2, canvasHeight/3);
-	shipContainer.addChild(boss.animations);
+	loadNextBoss();
 
-	player = new Player(canvasWidth/2, 2*canvasHeight/3);
-	shipContainer.addChild(player.animations);
-
-
-	score.text = gameState.score;
-	score.x = canvasWidth - 100;
-	score.y = 0;
-
-	overlayContainer.addChild(score);
-
-	
-	shipLivesContainer.x = 25;
-	shipLivesContainer.y = canvasHeight - 25;
-
-	for(var i = 0; i < gameState.lives; i++) {
-		var sprite = new createjs.Sprite(playerSpriteSheet, "still");
-		sprite.scaleX = .5;
-		sprite.scaleY = .5;
-
-		sprite.x = i*25;
-		sprite.y = 0;
-
-		shipLivesContainer.addChild(sprite);
-	}
-	overlayContainer.addChild(shipLivesContainer);
-
-	if(boss) {
-
-		bossHp.graphics.beginStroke("grey").beginFill("green").drawRect(20, 20, 250*boss.hp/boss.maxhp, 25).endFill();
-		overlayContainer.addChild(bossHp);
-	}
-
-
-
-
-	createjs.Ticker.addEventListener("tick", handleTick);
-	createjs.Ticker.useRAF = true;
-	createjs.Ticker.setFPS(60);
 }
 
 
@@ -98,10 +63,21 @@ function handleTick(event) {
 	colorContainer.children = [];
 }
 
+function clearForNext() {
+	enemyList.clear();
+	boss = null;
+	gameStage.removeAllChildren();
+	gameStage.removeAllEventListeners();
+	whiteContainer.removeAllChildren();
+	colorContainer.removeAllChildren();
+	shipContainer.removeAllChildren();
+	overlayContainer.removeAllChildren();
+}
+
 /**
  * game is still running, but clears screen and enemies to go to next level
  */
-function clearGame() {
+function playerDead() {
 
 	shipLivesContainer.removeAllChildren();
 	for(var i = 0; i < gameState.lives; i++) {
@@ -134,7 +110,7 @@ function clearGame() {
 /**
  * game is over, reset everything
  */
-function resetGame() {
+function gameOver() {
 
 
 	shipContainer.removeChild(player.animations);
@@ -167,5 +143,71 @@ function overlayUpdate() {
 	if(boss) {
 		bossHp.graphics.clear();
 		bossHp.graphics.beginStroke("grey").drawRect(20,20,250,25).beginFill("grey").drawRect(20,20,250,25).beginFill("green").drawRect(20, 20, 250*boss.hp/boss.maxhp, 25);
+	}
+}
+
+function loadNextBoss() {
+	if(bossList.length === 0) {
+		winner();
+	}
+	else {
+		clearForNext();
+
+		boss = bossList[0];
+		bossList.shift();
+
+		gameStage.addChild(shipContainer, colorContainer, whiteContainer, overlayContainer);
+
+
+		shipContainer.addChild(boss.animations);
+
+		player = new Player(canvasWidth/2, 2*canvasHeight/3);
+		shipContainer.addChild(player.animations);
+
+
+		score.text = gameState.score;
+		score.x = canvasWidth - 100;
+		score.y = 0;
+
+		overlayContainer.addChild(score);
+
+		
+		shipLivesContainer.x = 25;
+		shipLivesContainer.y = canvasHeight - 25;
+
+		for(var i = 0; i < gameState.lives; i++) {
+			var sprite = new createjs.Sprite(playerSpriteSheet, "still");
+			sprite.scaleX = .5;
+			sprite.scaleY = .5;
+
+			sprite.x = i*25;
+			sprite.y = 0;
+
+			shipLivesContainer.addChild(sprite);
+		}
+		overlayContainer.addChild(shipLivesContainer);
+
+		if(boss) {
+
+			bossHp.graphics.beginStroke("grey").beginFill("green").drawRect(20, 20, 250*boss.hp/boss.maxhp, 25).endFill();
+			overlayContainer.addChild(bossHp);
+		}
+
+		createjs.Ticker.addEventListener("tick", handleTick);
+		createjs.Ticker.useRAF = true;
+		createjs.Ticker.setFPS(60);
+	}
+}
+
+function checkIfPlayerDeadAndTakeAction() {
+	if(!player.invincible) {
+		player.die();
+		gameState.lives--;
+		if(gameState.lives < 0) {
+			gameOver();
+		}
+		else {
+			playerDead();
+		}
 	}
 }

@@ -141,7 +141,7 @@ Player.prototype.collisionCallback = function(target) {
 	target.hp--;
 
 	if(enemyList.length == 0 || (boss && boss.hp <= 0)) {
-
+		loadNextBoss();
 	}
 }
 
