@@ -5,7 +5,6 @@ function Massive(x, y) {
 	this.x = x;
 	this.y = y;
 	this.hp = 1000000;
-
 	this.bulletSpawns = [
 	new BulletSpawn(0,-100, shotgun, this),
 	new BulletSpawn(0,0,shotgun, this),
@@ -90,7 +89,9 @@ Massive.prototype.collisionCallback = function() {
 function DDP3(x, y) {
 	this.x = x;
 	this.y = y;
-	this.hp = 10000;
+	this.hp = 1000;
+	this.maxhp = this.hp;
+	this._node;
 
 	this.bulletSpawns = [
 		new BulletSpawn(-50,-100,shootAtEm,this), 
@@ -165,7 +166,10 @@ function DDP3(x, y) {
 		for(var i = 0; i < this.bulletSpawns.length; i++) {
 			this.bulletSpawns[i].update([player], this.collisionCallback);
 		}
-
+	}
+	this.destroy = function() {
+		shipContainer.removeChild(this.animations);
+		enemyList.remove(this._node);
 	}
 }
 

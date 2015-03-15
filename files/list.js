@@ -54,6 +54,10 @@ function List() {
 		node = null;
 	};
 
+	this.clear = function() {
+		this.head = this.makeNode(null);
+	}
+
 	this.start = function() {
 		if(this.head.data === null) return null;
 		return this.head;

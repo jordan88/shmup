@@ -237,7 +237,7 @@ function updateBullets(list, targetList, collisionCallback) {
 						bullet.y > highY)) {
 						bullet.destroy();
 						list.remove(node);
-						collisionCallback();
+						collisionCallback(target);
 					}
 				}
 				

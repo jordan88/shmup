@@ -128,6 +128,11 @@ function Player(x,y) {
 		if(keymap[39]) this.x += this.horiSpeed;
 		if(keymap[40]) this.y += this.vertSpeed;
 
+		if(this.x < 0) this.x = 0;
+		if(this.x > canvasWidth) this.x = canvasWidth;
+		if(this.y < 0) this.y = 0;
+		if(this.y > canvasHeight) this.y = canvasHeight;
+
 		this.animations.x = this.x;
 		this.animations.y = this.y;
 
@@ -168,8 +173,9 @@ function Player(x,y) {
 	}
 }
 
-Player.prototype.collisionCallback = function() {
-	//console.log("Boss hit");
+Player.prototype.collisionCallback = function(target) {
+	gameState.score += 10;
+	target.hp--;
 }
 
  function getMousePos(canvas, evt) {

@@ -10,16 +10,26 @@ var load = new createjs.LoadQueue(false);
 
 // vars to be initialized
 var gameStage = null;
+var titleStage = null;
 var shipContainer = null;
 var bulletContainer = null;
 var renderer = null;
 var colorContainer = null;
 var whiteContainer = null;
+var overlayContainer = null;
 
 // game vars
 var player = null;
 var boss = null;
+var enemyList = null;
+var gameState = {
+	lives: 3,
+	stage: 1,
+	score: 0
+}
 
+var score = null;
+var bossHp = null;
 // bullet sprite sheets
 
 var whiteSpriteSheet = null;
@@ -48,6 +58,7 @@ window.onload = function() {
 	load.addEventListener("complete", loadCompleteHandler);
 
 	load.loadManifest([
+		{id: "title", src: "graphics/title.png"},
 		{id: "pixel", src: "graphics/pixel.png"},
 		{id: "purpleorb", src: "graphics/purpleorb.png"},
 		{id: "explosion", src: "graphics/explosion.png"},
@@ -74,6 +85,7 @@ function progressHandler(event) {
 
 function loadCompleteHandler(event) {
 	initAssets();
+	loadTitle();
 }
 
 function initBasicVars() {
@@ -85,7 +97,10 @@ function initBasicVars() {
 	renderer = new Renderer(gameStage);
 	colorContainer = new createjs.Container();
 	whiteContainer = new createjs.Container();
-	gameStage.addChild(shipContainer, colorContainer, whiteContainer);
+	overlayContainer = new createjs.Container();
+	enemyList = new List();
+	score = new createjs.Text(0, "20px Arial", "#ff0000");
+	bossHp = new createjs.Shape();
 }
 
 function initAssets() {
@@ -153,21 +168,12 @@ function initAssets() {
 			}
 		}
 	});
-
-
-	player = new Player(canvasWidth/2, 2*canvasHeight/3);
-	boss = new DDP3(canvasWidth/2, canvasHeight/3);
-	shipContainer.addChild(boss.animations);
-	shipContainer.addChild(player.animations);
-
-	createjs.Ticker.addEventListener("tick", handleTick);
-	createjs.Ticker.useRAF = true;
-	createjs.Ticker.setFPS(60);
 }
 
 function handleTick(event) {
 	player.update();
 	boss.update();
+	overlayUpdate();
 	gameStage.update();
 	whiteContainer.children = [];
 	colorContainer.children = [];
