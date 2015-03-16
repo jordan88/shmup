@@ -4,7 +4,7 @@
 function Massive(x, y) {
 	this.x = x;
 	this.y = y;
-	this.hp = 100;
+	this.hp = 500;
 	this.maxhp = this.hp;
 	this.bulletSpawns = [
 	new BulletSpawn(0,-100, shotgun, this),
@@ -37,7 +37,7 @@ function Massive(x, y) {
 		"animations":{
 			"still": {
 				"frames": [0],
-				"next": "still",
+				"next": "still"
 			},
 			"movingRight": {
 				"frames": [0],
@@ -91,7 +91,7 @@ Massive.prototype.collisionCallback = function() {
 function DDP3(x, y) {
 	this.x = x;
 	this.y = y;
-	this.hp = 100;
+	this.hp = 500;
 	this.maxhp = this.hp;
 	this._node;
 
@@ -124,7 +124,7 @@ function DDP3(x, y) {
 		"animations":{
 			"still": {
 				"frames": [0],
-				"next": "still",
+				"next": "still"
 			},
 			"movingRight": {
 				"frames": [0],
@@ -182,12 +182,12 @@ DDP3.prototype.collisionCallback = function() {
 function DDP4(x, y) {
 	this.x = x;
 	this.y = y;
-	this.hp = 100;
+	this.hp = 1000;
 	this.maxhp = this.hp;
 	this.bulletSpawns = [
 		new BulletSpawn(0,-100, shotgun, this),
 		new BulletSpawn(0,0,shotgun, this),
-		new BulletSpawn(0, 0, cherryBlossom, this),
+		new BulletSpawn(0, 0, cherryBlossom, this)
 	//	new BulletSpawn(0,0, circle, this),
 	];
 
@@ -212,7 +212,7 @@ function DDP4(x, y) {
 		"animations":{
 			"still": {
 				"frames": [0],
-				"next": "still",
+				"next": "still"
 			},
 			"movingRight": {
 				"frames": [0],
@@ -236,12 +236,14 @@ function DDP4(x, y) {
 
 	var move = function() {
 		move.parameter = move.parameter || 0;
-		var epsilon = .01;
+		move.epsilon =  move.epsilon || .01;
 
-		this.x = canvasWidth/2 + 50*Math.cos(move.parameter);
-		move.parameter += epsilon;
-		if(move.parameter >= 2*Math.PI) {
-			move.parameter = 0;
+		this.x = canvasWidth/2 - 50*Math.cos(move.parameter);
+		this.y = canvasHeight/4 - 50*Math.sin(move.parameter);
+		move.parameter += move.epsilon;
+		if(move.parameter >= Math.PI || move.parameter < 0) {
+			//move.parameter = 0;
+			move.epsilon = -move.epsilon;
 		}
 	}.bind(this);
 
@@ -267,7 +269,7 @@ DDP4.prototype.collisionCallback = function() {
 function DDP5(x, y) {
 	this.x = x;
 	this.y = y;
-	this.hp = 100;
+	this.hp = 500;
 	this.maxhp = this.hp;
 	this.bulletSpawns = [
 	new BulletSpawn(0,-100, shotgun, this),
@@ -298,7 +300,7 @@ function DDP5(x, y) {
 		"animations":{
 			"still": {
 				"frames": [0],
-				"next": "still",
+				"next": "still"
 			},
 			"movingRight": {
 				"frames": [0],

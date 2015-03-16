@@ -13,7 +13,7 @@ function loadTitle() {
 	title.scaleX = canvasWidth/titleScreen.width;
 	title.scaleY = canvasHeight/titleScreen.height;
 
-	 var text = new createjs.Text("Press Start", "20px Arial", "#ff7700");
+	 var text = new createjs.Text("Click to Start", "20px Arial", "#ff7700");
 	 text.x = canvasWidth/2 - 50;
 	 text.y = 100;
 	 text.textBaseline = "alphabetic";
@@ -42,11 +42,13 @@ function loadGame() {
 		score: 0
 	};
 
+	gameState.lives--;
+
 	bossList = [
 		new DDP3(canvasWidth/2, canvasHeight/3),
 		new Massive(canvasWidth/2, canvasHeight/3),
 		new DDP4(canvasWidth/2, canvasHeight/3),
-		new DDP5(canvasWidth/2, canvasHeight/3),
+		new DDP5(canvasWidth/2, canvasHeight/3)
 	];
 
 	loadNextBoss();
@@ -107,6 +109,21 @@ function playerDead() {
 
 	setTimeout(showPlayerAgain, 2000)
 }
+
+function removeEverything() {
+	createjs.Ticker.removeEventListener("tick", handleTick);
+
+	enemyList.clear();
+	boss = null;
+	gameStage.removeAllChildren();
+	gameStage.removeAllEventListeners();
+	whiteContainer.removeAllChildren();
+	colorContainer.removeAllChildren();
+	shipContainer.removeAllChildren();
+	overlayContainer.removeAllChildren();
+
+}
+
 /**
  * game is over, reset everything
  */
@@ -119,17 +136,7 @@ function gameOver() {
 
 
 	setTimeout(function() {
-		createjs.Ticker.removeEventListener("tick", handleTick);
-
-		enemyList.clear();
-		boss = null;
-		gameStage.removeAllChildren();
-		gameStage.removeAllEventListeners();
-		whiteContainer.removeAllChildren();
-		colorContainer.removeAllChildren();
-		shipContainer.removeAllChildren();
-		overlayContainer.removeAllChildren();
-
+		removeEverything
 		loadTitle();
 	}, 2000);
 	
@@ -214,5 +221,33 @@ function checkIfPlayerDeadAndTakeAction() {
 
 function winner() {
 	console.log("you a winner");
-	
+	removeEverything();
+
+	var endingScreen = load.getResult("ending");
+
+
+	var endTitle = new createjs.Bitmap(endingScreen);
+	endTitle.x = 0;
+	endTitle.y = 0;
+	endTitle.scaleX = canvasWidth/endingScreen.width;
+	endTitle.scaleY = canvasHeight/endingScreen.height;
+
+	 var text = new createjs.Text("Your score is " + gameState.score, "20px Arial", "#ff7700");
+	 text.x = canvasWidth/2 - 50;
+	 text.y = canvasHeight - 100;
+	 text.textBaseline = "alphabetic";
+
+	gameStage.addChild(endTitle);
+	var c = new createjs.Container();
+	c.addChild(text);
+	gameStage.addChild(text);
+	gameStage.update();
+
+	var endTitleClickListener = function(e) {
+	this.removeEventListener("click", endTitleClickListener);
+	gameStage.removeAllChildren();
+	loadTitle();
+	}
+
+	document.getElementById("c").addEventListener("click", endTitleClickListener);
 }

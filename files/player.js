@@ -28,7 +28,7 @@ function Player(x,y) {
 		"animations":{
 			"still": {
 				"frames": [0],
-				"next": "still",
+				"next": "still"
 			},
 			"movingRight": {
 				"frames": [0],
@@ -120,7 +120,7 @@ function Player(x,y) {
 			"animations":{
 				"explode": {
 					"frames": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],
-					"next": "explode",
+					"next": "explode"
 				}
 			}
 		});

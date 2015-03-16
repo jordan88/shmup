@@ -112,7 +112,7 @@ function PurpleDot(x,y,vx,vy,ax, ay, damp) {
 	}
 }
 
-function Orb(x,y,vx,vy,ax,ay, color, damp,life) {
+function Orb(x,y,vx,vy,ax,ay, color, life, damp) {
 
 	this.damp = damp || 1;
 	this.x = x;

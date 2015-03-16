@@ -23,7 +23,7 @@ var boss = null;
 var bossList = [];
 var enemyList = null;
 var gameState = null;
-var numLives = 10;
+var numLives = 3;
 var score = null;
 var bossHp = null;
 var shipLivesContainer = null;
@@ -56,6 +56,7 @@ window.onload = function() {
 
 	load.loadManifest([
 		{id: "title", src: "graphics/title.png"},
+		{id: "ending", src: "graphics/ending.png"},
 		{id: "pixel", src: "graphics/pixel.png"},
 		{id: "purpleorb", src: "graphics/purpleorb.png"},
 		{id: "explosion", src: "graphics/explosion.png"},
@@ -115,7 +116,7 @@ function initAssets() {
 		"animations":{
 			"spin": {
 				"frames": [0],
-				"next": "spin",
+				"next": "spin"
 			}
 		}
 	});
@@ -185,7 +186,7 @@ function initAssets() {
 		"animations":{
 			"still": {
 				"frames": [0],
-				"next": "still",
+				"next": "still"
 			},
 			"movingRight": {
 				"frames": [0],

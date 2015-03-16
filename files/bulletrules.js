@@ -63,28 +63,28 @@ function cherryBlossom() {
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(i*2*Math.PI/numBullets);
-			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "red"));
+			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "red", 275));
 		}
 	}
 	else if(this.counter % 100 === 25) {
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(epsilon + i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(epsilon + i*2*Math.PI/numBullets);
-			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "purple"));
+			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "purple", 275));
 		}
 	}
 	else if(this.counter % 100 === 50) {
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(2*epsilon + i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(2*epsilon + i*2*Math.PI/numBullets);
-			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "red"));
+			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "red", 275));
 		}
 	}
 	else if(this.counter % 100 === 75) {
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(3*epsilon + i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(3*epsilon + i*2*Math.PI/numBullets);
-			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "purple"));
+			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "purple",275));
 		}
 	}
 }
