@@ -37,7 +37,7 @@ function loadTitle() {
 function loadGame() {
 
 	gameState = {
-		lives: 2,
+		lives: numLives,
 		stage: 1,
 		score: 0
 	};
@@ -45,8 +45,8 @@ function loadGame() {
 	bossList = [
 		new DDP3(canvasWidth/2, canvasHeight/3),
 		new Massive(canvasWidth/2, canvasHeight/3),
+		new DDP4(canvasWidth/2, canvasHeight/3),
 		new DDP5(canvasWidth/2, canvasHeight/3),
-		new DDP4(canvasWidth/2, canvasHeight/3)
 	];
 
 	loadNextBoss();
@@ -210,4 +210,9 @@ function checkIfPlayerDeadAndTakeAction() {
 			playerDead();
 		}
 	}
+}
+
+function winner() {
+	console.log("you a winner");
+	
 }

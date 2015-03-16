@@ -3,15 +3,21 @@
  *  rules is an object containing an update function to call and 
  *  
  */
-function BulletSpawn(x, y, pattern, owner) {
-	this.x = x;
-	this.y = y;
+function BulletSpawn(xOffset, yOffset, pattern, owner) {
+	this.xOffset = xOffset;
+	this.yOffset = yOffset;
 	this.pattern = pattern.bind(this);
 	this.owner = owner;
+	this.x = this.xOffset + this.owner.x;
+	this.y = this.yOffset + this.owner.y;
 	this.bulletList = new List();
 	this.counter = 0;
 
 	this.update = function(targetList, callback) {
+
+		
+		this.x = this.xOffset + this.owner.x;
+		this.y = this.yOffset + this.owner.y;
 		removeDeadBullets(this.bulletList);
 		updateBullets(this.bulletList, [player], callback);
 		if(player) {
@@ -20,4 +26,5 @@ function BulletSpawn(x, y, pattern, owner) {
 			this.counter++;
 		}
 	};
+
 }

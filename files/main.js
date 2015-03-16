@@ -22,12 +22,8 @@ var player = null;
 var boss = null;
 var bossList = [];
 var enemyList = null;
-var gameState = {
-		lives: 2,
-		stage: 1,
-		score: 0
-	};
-
+var gameState = null;
+var numLives = 10;
 var score = null;
 var bossHp = null;
 var shipLivesContainer = null;

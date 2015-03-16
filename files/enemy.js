@@ -101,8 +101,6 @@ function DDP3(x, y) {
 		new BulletSpawn(0,0, hose, this),
 		new BulletSpawn(50,0, spinnerFactory(13), this),
 		new BulletSpawn(-50,0, spinnerFactory(11), this)
-		//new BulletSpawn(0,0, cherryBlossom, this),
-		//new BulletSpawn(0,0, circle, this),
 	];
 
 	this.invincible = false;
@@ -152,8 +150,9 @@ function DDP3(x, y) {
 		move.parameter = move.parameter || 0;
 		var epsilon = .01;
 
-		this.x = canvasWidth/2 + 50*Math.cos(move.parameter);
-		move.parameter += epsilon;
+		this.x = 10*Math.cos(move.parameter) + canvasWidth/2;
+		this.y = 10*Math.sin(move.parameter) + canvasHeight/4;
+		move.parameter+= epsilon;
 		if(move.parameter >= 2*Math.PI) {
 			move.parameter = 0;
 		}
@@ -186,10 +185,9 @@ function DDP4(x, y) {
 	this.hp = 100;
 	this.maxhp = this.hp;
 	this.bulletSpawns = [
-	new BulletSpawn(0,-100, shotgun, this),
-	new BulletSpawn(0,0,shotgun, this),
-		new BulletSpawn(-50,10,shootAtEm,this), 
-		new BulletSpawn(50, 10, shootAtEm, this),
+		new BulletSpawn(0,-100, shotgun, this),
+		new BulletSpawn(0,0,shotgun, this),
+		new BulletSpawn(0, 0, cherryBlossom, this),
 	//	new BulletSpawn(0,0, circle, this),
 	];
 
@@ -253,11 +251,8 @@ function DDP4(x, y) {
 		move();
 		this.animations.x = this.x;
 		this.animations.y = this.y;
-		if(player) {
-			for(var i = 0; i < this.bulletSpawns.length; i++) {
-				this.bulletSpawns[i].update([player], this.collisionCallback);
-			}
-
+		for(var i = 0; i < this.bulletSpawns.length; i++) {
+			this.bulletSpawns[i].update([player], this.collisionCallback);
 		}
 		
 	}
@@ -277,9 +272,9 @@ function DDP5(x, y) {
 	this.bulletSpawns = [
 	new BulletSpawn(0,-100, shotgun, this),
 	new BulletSpawn(0,0,shotgun, this),
-		new BulletSpawn(-50,10,shootAtEm,this), 
-		new BulletSpawn(50, 10, shootAtEm, this),
-	//	new BulletSpawn(0,0, circle, this),
+		new BulletSpawn(-100,20, circle, this),
+		new BulletSpawn(100,20, circle, this),
+		new BulletSpawn(0,0, rain, this)
 	];
 
 	this.invincible = false;

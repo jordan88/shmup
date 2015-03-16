@@ -36,8 +36,8 @@ function circle() {
 	if(this.counter % 100 === 0) {
 		var speed = 7;
 		var number = 20;
-		var x = this.owner.x + this.x;
-		var y = this.owner.y + this.y;
+		var x = this.x;
+		var y = this.y;
 		for(var i = 0; i < number; i++) {
 			var vx = speed*Math.cos(i*2*Math.PI/number);
 			var vy = speed*Math.sin(i*2*Math.PI/number);
@@ -46,8 +46,8 @@ function circle() {
 			var pvx = speed*Math.cos(dAngle + i*2*Math.PI/number);
 			var pvy = speed*Math.sin(dAngle + i*2*Math.PI/number);
 			var randomness = 10;
-			this.bulletList.append(new Orb(random()*randomness + x, random()*randomness + y, vx, vy, 1, 1, "blue"));
-			this.bulletList.append(new PurpleDot(random()*randomness + x, random()*randomness+ y, pvx, pvy, 1, 1))
+			this.bulletList.append(new Orb(random()*randomness + x, random()*randomness + y, vx, vy, -.05,-.05, "blue"));
+			this.bulletList.append(new PurpleDot(random()*randomness + x, random()*randomness+ y, pvx, pvy, -.05,-.05))
 		}
 	}
 }
@@ -55,64 +55,64 @@ function circle() {
 function cherryBlossom() {
 	var numBullets = 40;
 	var speed = 2;
-	var x = this.owner.x + this.x;
-	var y = this.owner.y + this.y;
+	var x = this.x;
+	var y = this.y;
 	var epsilon = .5 + 2*Math.PI/numBullets;
 	if(this.counter % 100 === 0) {
 		
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(i*2*Math.PI/numBullets);
-			this.bulletList.append(new Orb(x, y, vx, vy, 1, 1, "red"));
+			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "red"));
 		}
 	}
 	else if(this.counter % 100 === 25) {
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(epsilon + i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(epsilon + i*2*Math.PI/numBullets);
-			this.bulletList.append(new Orb(x, y, vx, vy, 1, 1, "purple"));
+			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "purple"));
 		}
 	}
 	else if(this.counter % 100 === 50) {
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(2*epsilon + i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(2*epsilon + i*2*Math.PI/numBullets);
-			this.bulletList.append(new Orb(x, y, vx, vy, 1, 1, "red"));
+			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "red"));
 		}
 	}
 	else if(this.counter % 100 === 75) {
 		for(var i = 0; i < numBullets; i++) {
 			var vx = speed*Math.cos(3*epsilon + i*2*Math.PI/numBullets);
 			var vy = speed*Math.sin(3*epsilon + i*2*Math.PI/numBullets);
-			this.bulletList.append(new Orb(x, y, vx, vy, 1, 1, "purple"));
+			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "purple"));
 		}
 	}
 }
 
 function spread() {
 	if(this.counter % 100 === 50) {
-		var x = this.owner.x + this.x;
-		var y = this.owner.y + this.y;
+		var x = this.x;
+		var y = this.y;
 		for(var i = 0; i < 50; i++) {
 			var vx = 3*Math.cos(i*2*Math.PI/100);
 			var vy = 3*Math.sin(i*2*Math.PI/100);
 
-			this.bulletList.append(new Orb(x, y, vx, vy, 1, 1, "green"));
+			this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "green"));
 		}
 	}
 }
 
 function shootAtEm() {
 	if(this.counter % 50 === 0) {
-		var x = this.owner.x + this.x;
-		var y = this.owner.y + this.y;
+		var x = this.x;
+		var y = this.y;
 		var vx = player.x - x;
 		var vy = player.y - y;
 		var mag = Math.sqrt(vx*vx + vy*vy);
 		vx = 10*vx/mag;
 		vy = 10*vy/mag;
 
-		this.bulletList.append(new Orb(x, y, vx, vy, 1,1, "green"));
+		this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "green"));
 	}
 }
 
@@ -120,46 +120,46 @@ function hose() {
 
 	if(this.counter % 16 === 0) {
 		var speed = 2;
-		var x = this.owner.x + this.x;
-		var y = this.owner.y + this.y;
+		var x = this.x;
+		var y = this.y;
 		var vx = player.x - x;
 		var vy = player.y - y;
 		var mag = Math.sqrt(vx*vx + vy*vy);
 		vx = speed*vx/mag;
 		vy = speed*vy/mag;
 
-		this.bulletList.append(new Orb(x, y, vx, vy, 1,1, "red"));
+		this.bulletList.append(new Orb(x, y, vx, vy, 0,0, "red"));
 	}
 	else if(this.counter % 16 === 8) {
 		var speed = 2;
-		var x = this.owner.x + this.x;
-		var y = this.owner.y + this.y;
+		var x = this.x;
+		var y = this.y;
 		var vx = player.x - x;
 		var vy = player.y - y;
 		var mag = Math.sqrt(vx*vx + vy*vy);
 		vx = speed*vx/mag;
 		vy = speed*vy/mag;
 
-		this.bulletList.append(new PurpleDot(x, y, vx, vy, 1,1));
+		this.bulletList.append(new PurpleDot(x, y, vx, vy, 0,0));
 	}
 }
 
 function chain() {
 	var count = this.counter % 30;
 	 if(count === 0 || count ===  1 || count === 2) {
-	 	var x = this.owner.x + this.x;
-		var y = this.owner.y + this.y;
+	 	var x = this.x;
+		var y = this.y;
 		var vx = player.x - x;
 		var vy = player.y - y;
-	 	this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "green"));
+	 	this.bulletList.append(new Orb(x,y,vx,vy, 0,0, "green"));
 	}
 }
 
 function shotgun() {
 	if(this.counter % 200 === 0) {
 		var speed = 1;
-		var x = this.owner.x + this.x;
-		var y = this.owner.y + this.y;
+		var x = this.x;
+		var y = this.y;
 		var vx = player.x - x;
 		var vy = player.y - y;
 		var mag = Math.sqrt(vx*vx + vy*vy);
@@ -168,7 +168,7 @@ function shotgun() {
 
 		var number = 20;
 		for(var i = 0; i < number; i++) {
-			this.bulletList.append(new PurpleDot(x+Math.random()*60-30, y + Math.random()*100, vx, vy, 1, 1));
+			this.bulletList.append(new PurpleDot(x+Math.random()*60-30, y + Math.random()*100, vx, vy, 0,0));
 		}
 	}
 }
@@ -177,33 +177,58 @@ function spinnerFactory(cycle) {
 	return function() {
 		var counter = this.counter;
 		if(this.counter % cycle === 0) {
-			var x = this.owner.x + this.x;
-			var y = this.owner.y + this.y;
+			var x = this.x;
+			var y = this.y;
 			var n = 0;
 
 			var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
 			var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
-			this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+			this.bulletList.append(new Orb(x,y,vx,vy, 0,0, "blue"));
 			n++;
 			var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
 			var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
-			this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+			this.bulletList.append(new Orb(x,y,vx,vy, 0,0, "blue"));
 			n++;
 			var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
 			var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
-			this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+			this.bulletList.append(new Orb(x,y,vx,vy, 0,0, "blue"));
 			n++;
 			var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
 			var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
-			this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+			this.bulletList.append(new Orb(x,y,vx,vy, 0,0, "blue"));
 			n++;
 			var vx = 3*Math.cos((counter % 100 + n)*2*Math.PI/100);
 			var vy = 3*Math.sin((counter % 100 + n)*2*Math.PI/100);
-			this.bulletList.append(new Orb(x,y,vx,vy, 1, 1, "blue"));
+			this.bulletList.append(new Orb(x,y,vx,vy, 0,0, "blue"));
 			n++;
 		}
 	};
 
+}
+
+function shootDownFactory(option) {
+	return function() {
+		var r = .5
+		if(option) {
+			r = option
+		}
+		if(this.counter %5 === 0) {
+			var x = this.x;
+			var y = this.y;
+			this.bulletList.append(new Orb(x, y, 0, 1.5, r*(random()-.5), .2, "blue"));
+		}
+	};
+}
+
+function rain() {
+
+	if(this.counter % 50 === 0) {
+		var x = this.x;
+		var y = this.y;
+
+		this.bulletList.append(new MobilePattern(x,y,-3, 0, shootDownFactory(.1), this.bulletList));
+		this.bulletList.append(new MobilePattern(x,y,3,0, shootDownFactory(-.1), this.bulletList));
+	}
 }
 
 function updateBullets(list, targetList, collisionCallback) {
